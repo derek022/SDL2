@@ -15,7 +15,7 @@ include_directories(${PROJECT_SOURCE_DIR}/../../../libs/SDL2/include)
 add_subdirectory(${PROJECT_SOURCE_DIR}/../../../libs/SDL2 SDL2.out)
 
 add_library( # Sets the name of the library.
-             native-lib
+             main
 
              # Sets the library as a shared library.
              SHARED
@@ -41,8 +41,9 @@ find_library( # Sets the name of the path variable.
 # build script, prebuilt third-party libraries, or system libraries.
 
 target_link_libraries( # Specifies the target library.
-                       native-lib
-                        OpenSLES
+        main
+                        OpenSLES SDL2  GLESv1_CM
+        GLESv2
                        # Links the target library to the log library
                        # included in the NDK.
                        ${log-lib} )
