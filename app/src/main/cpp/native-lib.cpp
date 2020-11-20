@@ -1,13 +1,19 @@
 #include <jni.h>
 #include <string>
+#include "XLog.h"
+
+extern "C"
+{
 #include "SDL.h"
+#include "libavcodec/avcodec.h"
+}
+
 
 
 extern "C"
 {
-    JNIEXPORT jstring JNICALL
 
-Java_com_example_sdl2compile_MainActivity_stringFromJNI(
+    JNIEXPORT jstring JNICALL Java_com_example_sdl2compile_MainActivity_stringFromJNI(
         JNIEnv* env,
         jobject /* this */) {
     std::string hello = "Hello from C++";
@@ -18,11 +24,11 @@ Java_com_example_sdl2compile_MainActivity_stringFromJNI(
 int main(int argc, char *argv[]) {
 
     // 打印ffmpeg信息
-//    const char *str = avcodec_configuration();
-//    ALOGI("avcodec_configuration: %s", str);
+    const char *str = avcodec_configuration();
+    XLOGI("avcodec_configuration: %s", str);
 
     char *video_path = argv[1];
-//    ALOGI("video_path  : %s", video_path);
+    XLOGI("video_path  : %s", video_path);
 
     //开始准备sdl的部分
     //SDL 要素  window render texture
@@ -32,7 +38,7 @@ int main(int argc, char *argv[]) {
 
     //初始化SDL
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-//        ALOGE("Could not initialize SDL - %s", SDL_GetError());
+        XLOGE("Could not initialize SDL - %s", SDL_GetError());
         return 1;
     }
 

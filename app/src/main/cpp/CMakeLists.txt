@@ -10,9 +10,30 @@ cmake_minimum_required(VERSION 3.4.1)
 # You can define multiple libraries, and CMake builds them for you.
 # Gradle automatically packages shared libraries with your APK.
 
+include_directories(include)
+
 #直接添加SDL库
 include_directories(${PROJECT_SOURCE_DIR}/../../../libs/SDL2/include)
 add_subdirectory(${PROJECT_SOURCE_DIR}/../../../libs/SDL2 SDL2.out)
+
+# 添加ffmpeg库
+set(FF ${CMAKE_CURRENT_SOURCE_DIR}/../jniLibs/${ANDROID_ABI})
+
+add_library(avcodec SHARED IMPORTED)
+set_target_properties(avcodec PROPERTIES IMPORTED_LOCATION ${FF}/libavcodec.so)
+
+add_library(avformat SHARED IMPORTED)
+set_target_properties(avformat PROPERTIES IMPORTED_LOCATION ${FF}/libavformat.so)
+
+add_library(avutil SHARED IMPORTED)
+set_target_properties(avutil PROPERTIES IMPORTED_LOCATION ${FF}/libavutil.so)
+
+add_library(swscale SHARED IMPORTED)
+set_target_properties(swscale PROPERTIES IMPORTED_LOCATION ${FF}/libswscale.so)
+
+add_library(swresample SHARED IMPORTED)
+set_target_properties(swresample PROPERTIES IMPORTED_LOCATION ${FF}/libswresample.so)
+
 
 add_library( # Sets the name of the library.
              main
@@ -41,9 +62,12 @@ find_library( # Sets the name of the path variable.
 # build script, prebuilt third-party libraries, or system libraries.
 
 target_link_libraries( # Specifies the target library.
-        main
-                        OpenSLES SDL2  GLESv1_CM
+        main OpenSLES SDL2  GLESv1_CM
         GLESv2
+        android
+        EGL GLESv2
+
+        avcodec avformat avutil swscale swresample
                        # Links the target library to the log library
                        # included in the NDK.
                        ${log-lib} )

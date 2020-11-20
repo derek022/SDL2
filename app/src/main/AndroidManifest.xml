@@ -3,7 +3,7 @@
      com.gamemaker.game
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.libsdl.app"
+    package="com.example.sdl2compile"
     android:versionCode="1"
     android:versionName="1.0"
     android:installLocation="auto">
@@ -65,8 +65,10 @@
         <!-- Example of setting SDL hints from AndroidManifest.xml:
         <meta-data android:name="SDL_ENV.SDL_ACCELEROMETER_AS_JOYSTICK" android:value="0"/>
          -->
-     
-        <activity android:name="SDLActivity"
+
+        <activity
+            android:theme="@style/Theme.AppCompat"
+            android:name="com.example.sdl2compile.MainActivity"
             android:label="@string/app_name"
             android:alwaysRetainTaskState="true"
             android:launchMode="singleInstance"
@@ -76,14 +78,30 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <!-- Drop file event -->
+        </activity>
+     
+        <activity
+            android:theme="@style/Theme.AppCompat"
+            android:name="org.libsdl.app.SDLActivity"
+            android:label="SDL"
+            android:alwaysRetainTaskState="true"
+            android:launchMode="singleInstance"
+            android:configChanges="orientation|uiMode|screenLayout|screenSize|smallestScreenSize|keyboard|keyboardHidden|navigation"
+            >
             <!--
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            -->
+            <!-- Drop file event -->
+
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
-                <data android:mimeType="*/*" />
+<!--                <data android:mimeType="*/*" />-->
             </intent-filter>
-            -->
+
         </activity>
     </application>
 
